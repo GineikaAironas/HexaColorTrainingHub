@@ -7,6 +7,8 @@ let diffButtons = document.querySelectorAll(".diffButton");
 let choicesBox = document.getElementById("guessesPanel");
 let choicesCount = 0;
 let diff = "";
+let answer = "";
+let choicesLeft = 0;
 let allDifs = ["easy", "medium", "hard", "top"];
 function setup() {
     //setup difficulty button event listeners
@@ -23,7 +25,6 @@ function setup() {
 function play(difficulty) {
     if (inGame) reset(); //Reset if ingame
     inGame = true;
-    choicesCount = 0;
     //Calc how many choices we'll need to generate
     switch (difficulty) {
         case "EZ":
@@ -43,28 +44,35 @@ function play(difficulty) {
             diff = "top";
             break;
     }
+    choicesLeft = choicesCount - 1;
     //Remove any diff classes from choices panel
     allDifs.forEach(function (d) {
         choicesBox.classList.remove(d);
     });
     //Add diff template
     choicesBox.classList.add(diff);
+    //Remove existing elements
+    for (let i = choicesBox.childNodes.length - 1; i >= 0; i--) {
+        choicesBox.removeChild(choicesBox.childNodes[i]);
+    }
     loop();
-    /////////////////////////////////////////////////while (inGame) loop();
 }
 function loop() {
     //Generate new answer
-    let answer = generateHexColor();
+    answer = generateHexColor();
     let choiceColorsArr = [];
     //Generate new choices
     for (let i = 0; i < choicesCount; i++) {
         choiceColorsArr.push(generateHexColor());
     }
     //Add answer to random choice
-    choiceColorsArr[Math.random() * choicesCount] = answer;
+    choiceColorsArr[Math.floor(Math.random() * choicesCount)] = answer;
     //Print color out
     colorGuessTextBox.textContent = answer;
-    //Creates all choices in dom
+    console.log("shits");
+    //Create all choices in dom
+    console.log(choicesCount);
+
     for (let i = 0; i < choicesCount; i++) {
         let element = document.createElement("div");
         element.gameColor = choiceColorsArr[i];
@@ -73,6 +81,23 @@ function loop() {
         element.style.backgroundColor = element.gameColor;
         choicesBox.appendChild(element);
     }
+    console.log("shits");
+    //Add click logic to all choices
+    document.querySelectorAll(".guessItem").forEach(function (el) {
+        el.addEventListener("click", function () {
+            console.log(el.gameColor);
+            console.log(answer);
+            if (el.gameColor == answer) {
+                //Win
+                guessCorrect(el);
+                return;
+            } else {
+                //Remove element and continue
+                guessWrong(el);
+            }
+        });
+    });
+    console.log("shits");
 }
 function reset() {
     uiMessageTextBox.textContent = "Resetting";
@@ -83,7 +108,14 @@ function reset() {
         choicesBox.removeChild(choicesBox.childNodes[i]);
     }
 }
-function gameOver() {}
+function gameOver() {
+    uiMessageTextBox.textContent = "You lost!";
+    setTimeout(() => {
+        inGame = false;
+        reset();
+        play(diff);
+    }, 3000);
+}
 function generateHexColor() {
     let hex = "#";
     let r = Math.floor(Math.random() * 256);
@@ -93,6 +125,37 @@ function generateHexColor() {
     hex += g.toString(16).padStart(2, "0");
     hex += b.toString(16).padStart(2, "0");
     return hex;
+}
+function guessCorrect(choice) {
+    //Make all choices answer color
+    document.querySelectorAll(".guessItem").forEach(function (el) {
+        el.style.backgroundColor = answer;
+    });
+    //Calculate score
+    //On win add how many choices were left
+    score += choicesLeft;
+    scoreTextBox.textContent = score;
+    //Output "Correct"
+    uiMessageTextBox.textContent = "Correct!";
+    //make choice invisible
+    choice.style.position = "relative";
+    choice.style.left = "-9999px";
+    setTimeout(() => {
+        inGame = false;
+        play(diff);
+    }, 1500);
+}
+function guessWrong(choice) {
+    //make choice invisible
+    choice.style.position = "relative";
+    choice.style.left = "-9999px";
+
+    //If last try
+    if (choicesLeft < 2) {
+        gameOver();
+        return;
+    }
+    choicesLeft--;
 }
 
 setup();
