@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@700&display=swap");
+
+* {
+    font-family: "Kanit", sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100vw;
+    height: 100vh;
+}
+#mainHeader {
+    background-color: #555;
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    padding: 0;
+    height: 2em;
+    border-bottom: 2px solid black;
+}
+
+#colorGuessPanel {
+    min-height: 20vh;
+    background-color: #441144;
+    color: #eee;
+    font-size: 3em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#colorGuessPanel h1 {
+    padding: 0;
+    margin: 0em;
+}
+
+#menuBar {
+    min-height: 3em;
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+#guessesPanel {
+    overflow: hidden;
+    display: grid;
+    gap: 2em;
+    width: 80%;
+    padding-top: 2em;
+    justify-items: center;
+}
+#guessesPanel.easy {
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    align-self: center;
+}
+
+.guessItem.easy {
+    width: 100%;
+    height: 0;
+    padding-top: 100%;
+    background-color: aqua;
+}
