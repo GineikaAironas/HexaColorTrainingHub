@@ -55,7 +55,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: end;
     background-color: var(--menuBarBg);
-    min-height: 3em;
+    min-height: 4em;
     border-top: var(--mainBorder);
     border-bottom: var(--mainBorder);
 }
@@ -63,7 +63,7 @@ body {
 #scoreCounterBox {
     display: flex;
     align-items: center;
-    padding-right: 2em;
+    padding-right: 1em;
 }
 #scoreCounter {
     padding-left: 0.25em;
@@ -75,7 +75,8 @@ body {
     padding: 0 2em;
 }
 #difficultyButtonBox {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-self: end;
     justify-content: end;
 }
@@ -85,31 +86,74 @@ body {
     overflow: hidden;
     display: grid;
     gap: 2em;
-    width: 80%;
-    padding: 2em 15% 750px 15%;
+    padding: 2em 10000% 750px 10000%;
     justify-items: center;
 }
 #guessesPanel.easy {
     grid-template-columns: 1fr 1fr;
-    width: 70%;
+    width: 65%;
     align-self: center;
 }
 #guessesPanel.medium {
-    grid-template-columns: 1fr 1fr 1fr;
-    width: 70%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 90%;
     align-self: center;
 }
 #guessesPanel.hard {
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    width: 70%;
+    width: 95%;
     align-self: center;
 }
 #guessesPanel.top {
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    width: 70%;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 61%;
     align-self: center;
 }
 
+@media (min-width: 768px) {
+    #difficultyButtonBox {
+        display: flex;
+        justify-self: end;
+        justify-content: end;
+    }
+    #guessesPanel.medium {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 95%;
+    }
+    #guessesPanel.hard {
+        width: 85%;
+    }
+    #guessesPanel.top {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        width: 80%;
+    }
+}
+
+@media (min-width: 910px) {
+    #guessesPanel.easy {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width: 65%;
+    }
+    #guessesPanel.hard {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        width: 95%;
+    }
+    #guessesPanel.top {
+        width: 62%;
+    }
+}
+@media (min-width: 1200px) {
+    #guessesPanel.easy {
+        width: 95%;
+    }
+    #guessesPanel.medium {
+        width: 62%;
+    }
+    #guessesPanel.top {
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        width: 95%;
+    }
+}
 .guessItem {
     width: 100%;
     height: 0;

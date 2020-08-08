@@ -31,15 +31,15 @@ function play(difficulty) {
             diff = "easy";
             break;
         case "MD":
-            choicesCount = 9;
+            choicesCount = 8;
             diff = "medium";
             break;
         case "HD":
-            choicesCount = 16;
+            choicesCount = 12;
             diff = "hard";
             break;
         case "TOP":
-            choicesCount = 25;
+            choicesCount = 20;
             diff = "top";
             break;
     }
